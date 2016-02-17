@@ -1,7 +1,14 @@
 require 'minitest/autorun'
 require 'minitest/pride'
+require 'active_record'
 require './department.rb'
 require './employee.rb'
+require './departments_migration'
+require './employees_migration'
+require './database_configuration'
+
+
+ActiveRecord::Migration.verbose = false
 
 class EmployeeReviews < Minitest::Test
 
@@ -11,7 +18,7 @@ class EmployeeReviews < Minitest::Test
   end
 
   def test_can_create_new_department
-    a = Department.new("Marketing")
+    a = Department.new(name: "Marketing")
     assert a
     assert_equal "Marketing", a.name
   end
@@ -22,10 +29,10 @@ class EmployeeReviews < Minitest::Test
   end
 
   def test_can_add_employee_to_a_department
-    a = Department.new("Marketing")
+    a = Department.new(name: "Marketing")
     new_employee = Employee.new(name: "Dan", email: "d@mail.com", phone: "914-555-5555", salary: 50000.00)
-    a.add_employee(new_employee)
-    assert_equal [new_employee], a.staff
+    a.employees << new_employee
+    assert_equal [new_employee], a.employees
   end
 
   def test_can_get_employee_name

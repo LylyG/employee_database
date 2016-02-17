@@ -3,7 +3,7 @@ require './database_configuration.rb'
 class EmployeesMigration < ActiveRecord::Migration
   def change
     create_table :employees do |t|
-      t.references :departments
+      t.references :department
       t.string :name
       t.string :email
       t.string :phone
